@@ -11,7 +11,9 @@
 	const listBuckets = async (s3: any) => {
 		return await s3.listBuckets().promise();
 	};
-
+	const listItemInBucket=async(s3: any) => {
+		return await s3.ListObjectsV2().promise();
+	};
 	export const getBuckets = async (
 		AWSEndpointString: string,
 		AWSAccessKeyId: string,
@@ -20,4 +22,14 @@
 		const AWSEndpoint = new AWS.Endpoint(AWSEndpointString);
 		return await listBuckets(awsConnection(AWSAccessKeyId, AWSSecretKey, AWSEndpoint));
 	};
+	export const getItemsFromBucket = async(
+		AWSBucket:string,
+		AWSEndpointString: string,
+		AWSAccessKeyId: string,
+		AWSSecretKey: string
+	) => {
+		const AWSEndpoint = new AWS.Endpoint(AWSEndpointString);
+
+	}
+
 </script>
