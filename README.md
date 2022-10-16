@@ -1,38 +1,8 @@
-# create-svelte
+# Storj S3 manager
+**What is this?** This is a web app to upload/manage files within storj bucket using their S3 API
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte).
+**Why is it needed?** Files uploaded through storj official web app differ to the ones created by S3 API or storj CLI. 
 
-## Creating a project
+**If you need to manually edit files for app that works with storj S3 API, this app is for you.**
 
-If you're seeing this, you've probably already done this step. Congrats!
-
-```bash
-# create a new project in the current directory
-npm create svelte@latest
-
-# create a new project in my-app
-npm create svelte@latest my-app
-```
-
-## Developing
-
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
-
-```bash
-npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
-
-## Building
-
-To create a production version of your app:
-
-```bash
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+ [Launch the app by clicking here.](https://storj-s3-manager.vercel.app/)
