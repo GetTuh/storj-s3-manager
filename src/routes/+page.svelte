@@ -1,52 +1,39 @@
 <script lang="ts">
-	import { Button, Input, Center, Stack, Group, Space, Text, Title } from '@svelteuidev/core';
+	import {
+		Button,
+		Input,
+		Center,
+		Stack,
+		Group,
+		Space,
+		Text,
+		Title,
+		exception,
+		Loader
+	} from '@svelteuidev/core';
+	import { onMount } from 'svelte';
 
-	import { getBuckets } from './connect.svelte';
+	import { getBuckets, getItemsFromBucket } from './connect.svelte';
 	let accessKey: string, endpoint: string, secretKey: string;
-	// const setLocalStorageVars=()=>{
-	// 	localStorage.setItem("endpoint",endpoint)
-	// 	localStorage.setItem("accessKey",accessKey)
-	// 	localStorage.setItem("secretKey",secretKey)
-	// }
-	const getAwsBuckets = async () => {
-		const buckets = await getBuckets(endpoint, accessKey, secretKey);
-		console.log(buckets);
+	let startWaiting = false;
+	let bucketInside: any;
+	let bucket = async () => {
+		startWaiting = true;
+		let bucket = getBuckets(endpoint, accessKey, secretKey);
+		bucketInside = bucket;
 	};
-	// if(localStorage.getItem('endpoint')){
-	// 	getAwsBuckets()
-	// }
-	const getItemsFromBucket = async (itemName: string) => {
-		console.log(itemName);
-		return 0;
-	};
-	const testdata = {
-		Buckets: [
-			{
-				Name: 'demo-bucket',
-				CreationDate: '2022-05-07T14:58:15.615Z'
-			},
-			{
-				Name: 'hehe',
-				CreationDate: '2022-09-01T15:31:54.214Z'
-			},
-			{
-				Name: 'newb',
-				CreationDate: '2022-09-14T17:49:54.091Z'
-			},
-			{
-				Name: 'tezt',
-				CreationDate: '2022-09-01T15:30:17.932Z'
-			},
-			{
-				Name: 'waterbear',
-				CreationDate: '2022-09-01T15:57:50.396Z'
-			}
-		],
-		Owner: {
-			DisplayName: 'minio',
-			ID: '02d6176db174dc93cb1b899f7c6078f08654445fe8cf1b6ce98d8855f66bdbf4'
-		}
-	};
+	// const setLocalStorageVars = () => {
+	// 	localStorage.setItem('endpoint', endpoint);
+	// 	localStorage.setItem('accessKey', accessKey);
+	// 	localStorage.setItem('secretKey', secretKey);
+	// };
+	try {
+		accessKey = localStorage.getItem('accessKey');
+		endpoint = localStorage.getItem('endpoint');
+		secretKey = localStorage.getItem('secretKey');
+	} catch {
+		console.log('No data saved');
+	}
 </script>
 
 <Center>
@@ -55,18 +42,28 @@
 		<Input placeholder="Endpoint URL" bind:value={endpoint} />
 		<Input placeholder="AWS Secret Key" bind:value={secretKey} />
 
-		<!-- <Button on:click={setLocalStorageVars}>Connect</Button> -->
-		{#each testdata.Buckets as item}
-			<Group grow>
-				<Button
-					variant="outline"
-					on:click={() => getItemsFromBucket(item.Name)}
-					override={{ height: 50 }}
-					><Title>{item.Name}</Title>
-					<Space />
-					<Text align="right">Created {item.CreationDate}</Text>
-				</Button>
-			</Group>
-		{/each}
+		<Button on:click={bucket}>Connect</Button>
+
+		<!-- <Button on:click={()=>data=1}>show data</Button> -->
+		{#if startWaiting}
+			{#await bucketInside}
+				<Center>
+					<Loader />
+				</Center>
+			{:then value}
+				{#each value.Buckets as item}
+					<Group grow>
+						<Button
+							variant="outline"
+							on:click={() => getItemsFromBucket(item.Name)}
+							override={{ height: 50 }}
+							><Title>{item.Name}</Title>
+							<Space />
+							<Text align="right">Created {item.CreationDate}</Text>
+						</Button>
+					</Group>
+				{/each}
+			{/await}
+		{/if}
 	</Stack>
 </Center>

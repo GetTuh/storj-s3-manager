@@ -11,7 +11,7 @@
 	const listBuckets = async (s3: any) => {
 		return await s3.listBuckets().promise();
 	};
-	const listItemInBucket=async(s3: any) => {
+	const listItemsInBucket=async(s3: any) => {
 		return await s3.ListObjectsV2().promise();
 	};
 	export const getBuckets = async (
