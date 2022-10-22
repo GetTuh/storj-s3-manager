@@ -9,13 +9,21 @@
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
 		"lint": "prettier --check .",
-		"format": "prettier --write ."
+		"format": "prettier --write .",
+		"prepare": "npm run smui-theme",
+		"smui-theme": "smui-theme compile static/smui.css -i src/theme"
 	},
 	"devDependencies": {
+		"@material/typography": "^14.0.0",
+		"@smui-extra/accordion": "^7.0.0-beta.0",
+		"@smui/button": "^7.0.0-beta.0",
+		"@smui/card": "^7.0.0-beta.0",
+		"@smui/textfield": "^7.0.0-beta.0",
 		"@sveltejs/adapter-auto": "next",
 		"@sveltejs/kit": "next",
 		"prettier": "^2.6.2",
 		"prettier-plugin-svelte": "^2.7.0",
+		"smui-theme": "^7.0.0-beta.0",
 		"svelte": "^3.44.0",
 		"svelte-check": "^2.7.1",
 		"svelte-preprocess": "^4.10.6",
@@ -26,8 +34,7 @@
 	"type": "module",
 	"dependencies": {
 		"@rollup/plugin-typescript": "^8.5.0",
-		"@svelteuidev/composables": "^0.7.3",
-		"@svelteuidev/core": "^0.7.3",
-		"aws-sdk": "^2.1216.0"
+		"aws-sdk": "^2.1216.0",
+		"svelte-material-ui": "^7.0.0-beta.0"
 	}
 }
