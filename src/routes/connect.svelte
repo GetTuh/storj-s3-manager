@@ -8,28 +8,25 @@
 		});
 		return new AWS.S3({ endpoint: AWSEndpoint });
 	};
-	const listBuckets = async (s3: any) => {
-		return await s3.listBuckets().promise();
-	};
-	const listItemsInBucket=async(s3: any) => {
-		return await s3.ListObjectsV2().promise();
-	};
+
 	export const getBuckets = async (
 		AWSEndpointString: string,
 		AWSAccessKeyId: string,
 		AWSSecretKey: string
 	) => {
 		const AWSEndpoint = new AWS.Endpoint(AWSEndpointString);
-		return await listBuckets(awsConnection(AWSAccessKeyId, AWSSecretKey, AWSEndpoint));
+		return await awsConnection(AWSAccessKeyId, AWSSecretKey, AWSEndpoint).listBuckets().promise();
 	};
-	export const getItemsFromBucket = async(
-		AWSBucket:string,
+	export const getItemsFromBucket = async (
+		AWSBucket: string,
 		AWSEndpointString: string,
 		AWSAccessKeyId: string,
 		AWSSecretKey: string
 	) => {
 		const AWSEndpoint = new AWS.Endpoint(AWSEndpointString);
-
-	}
-
+		let elo = await awsConnection(AWSAccessKeyId, AWSSecretKey, AWSEndpoint)
+			.listObjectsV2({Bucket: AWSBucket})
+			.promise();
+		return elo;
+	};
 </script>
