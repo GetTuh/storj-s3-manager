@@ -1,18 +1,9 @@
 <script lang="ts">
-	import {
-		Button,
-		Input,
-		Center,
-		Stack,
-		Group,
-		Space,
-		Text,
-		Title,
-		exception,
-		Loader
-	} from '@svelteuidev/core';
-	import { onMount } from 'svelte';
+	import Textfield from '@smui/textfield';
+	import Button, { Label } from '@smui/button';
+	import Accordion, { Panel, Header, Content } from '@smui-extra/accordion';
 
+	import { onMount } from 'svelte';
 	import { getBuckets, getItemsFromBucket } from './connect.svelte';
 	let accessKey: string, endpoint: string, secretKey: string;
 	let startWaiting = false;
@@ -27,6 +18,7 @@
 	// 	localStorage.setItem('accessKey', accessKey);
 	// 	localStorage.setItem('secretKey', secretKey);
 	// };
+
 	try {
 		accessKey = localStorage.getItem('accessKey');
 		endpoint = localStorage.getItem('endpoint');
@@ -36,34 +28,33 @@
 	}
 </script>
 
-<Center>
-	<Stack override={{ width: 500, margin: 50 }}>
-		<Input placeholder="AWS Access key ID" bind:value={accessKey} />
-		<Input placeholder="Endpoint URL" bind:value={endpoint} />
-		<Input placeholder="AWS Secret Key" bind:value={secretKey} />
+<center>
+	<!-- <Stack override={{ width: 500, margin: 50 }}> -->
+	<Textfield label="AWS Access key ID" bind:value={accessKey} />
+	<Textfield label="Endpoint URL" bind:value={endpoint} />
+	<Textfield label="AWS Secret Key" bind:value={secretKey} />
 
-		<Button on:click={bucket}>Connect</Button>
+	<Button variant="raised" on:click={bucket}>Connect</Button>
 
-		<!-- <Button on:click={()=>data=1}>show data</Button> -->
-		{#if startWaiting}
-			{#await bucketInside}
-				<Center>
-					<Loader />
-				</Center>
-			{:then value}
-				{#each value.Buckets as item}
-					<Group grow>
-						<Button
-							variant="outline"
-							on:click={() => getItemsFromBucket(item.Name)}
-							override={{ height: 50 }}
-							><Title>{item.Name}</Title>
-							<Space />
-							<Text align="right">Created {item.CreationDate}</Text>
-						</Button>
-					</Group>
-				{/each}
-			{/await}
-		{/if}
-	</Stack>
-</Center>
+	<br />
+	{#if startWaiting}
+		{#await bucketInside}
+			<center> pls wait </center>
+		{:then value}
+			{#each value.Buckets as item}
+				<Accordion>
+					<Panel>
+						<Header
+							><div class="mdc-typography--headline1">{item.Name}</div>
+							Created {item.CreationDate}</Header
+						>
+						<Content>
+							Here Will be the contents of bucket {item.Name}
+						</Content>
+					</Panel>
+				</Accordion>
+			{/each}
+		{/await}
+	{/if}
+	<!-- </Stack> -->
+</center>
