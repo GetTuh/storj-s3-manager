@@ -24,9 +24,8 @@
 		AWSSecretKey: string
 	) => {
 		const AWSEndpoint = new AWS.Endpoint(AWSEndpointString);
-		let elo = await awsConnection(AWSAccessKeyId, AWSSecretKey, AWSEndpoint)
-			.listObjectsV2({Bucket: AWSBucket})
+		return await awsConnection(AWSAccessKeyId, AWSSecretKey, AWSEndpoint)
+			.listObjectsV2({ Bucket: AWSBucket })
 			.promise();
-		return elo;
 	};
 </script>
