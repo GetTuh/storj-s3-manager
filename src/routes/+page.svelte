@@ -5,6 +5,7 @@
 	import LinearProgress from '@smui/linear-progress';
 	import Dialog, { Title, Actions } from '@smui/dialog';
 	import List, { Item, Text } from '@smui/list';
+	import IconButton from '@smui/icon-button';
 
 	import { onMount } from 'svelte';
 	import { getBuckets, getItemsFromBucket } from './connect.svelte';
@@ -60,7 +61,7 @@
 			{:then value}
 				<Title id="list-title">Choose a bucket</Title>
 				<Content id="list-content">
-					<List>
+					<List width="100">
 						{#each value.Buckets as bucket}
 							<Item on:SMUI:action={() => bucketFiles(bucket.Name)}>
 								<Text>
@@ -89,6 +90,8 @@
 					{#each items.Contents as item}
 						<Item>
 							{item.Key}
+							<IconButton class="material-icons" on:click={() => console.log('clicked')}>edit</IconButton>
+							<IconButton class="material-icons" on:click={() => console.log('clicked')}>delete</IconButton>
 						</Item>
 					{/each}
 				{:else}
