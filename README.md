@@ -5,4 +5,4 @@
 
 **If you need to manually edit files for app that works with storj S3 API, this app is for you.**
 
- [Launch the app by clicking here.](https://storj-s3-manager.vercel.app/)
+ [Launch the app by clicking here.](http://185.24.219.227:5173/)
