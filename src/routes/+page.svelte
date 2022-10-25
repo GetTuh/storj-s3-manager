@@ -8,24 +8,27 @@
 	import IconButton from '@smui/icon-button';
 
 	import { onMount } from 'svelte';
-	import { getBuckets, getItemsFromBucket } from './connect.svelte';
-	let accessKey: string, endpoint: string, secretKey: string;
+	import { getBuckets, getItemsFromBucket, deleteItem, putObject } from './connect.svelte';
+	let accessKey: string, endpoint: string, secretKey: string, currentBucketName: string;
 	let waitForItem = false;
 	let bucketItems: any;
 	let bucketInside: any;
 
 	let open = false;
-	let clicked = 'Nothing yet.';
 	const bucket = async () => {
 		let bucket = getBuckets(endpoint, accessKey, secretKey);
 		open = true;
 		bucketInside = bucket;
 	};
-	let bucketFiles = async (bucketName: string) => {
+	const bucketFiles = async (bucketName: string) => {
+		currentBucketName = bucketName;
 		open = false;
 		waitForItem = true;
 		let items = getItemsFromBucket(bucketName, endpoint, accessKey, secretKey);
 		bucketItems = items;
+	};
+	const deleteBucketItem = (AWSObjectKey: string) => {
+		deleteItem(currentBucketName, endpoint, accessKey, secretKey, AWSObjectKey);
 	};
 	// const setLocalStorageVars = () => {
 	// 	localStorage.setItem('endpoint', endpoint);
@@ -87,11 +90,19 @@
 		{:then items}
 			<List>
 				{#if items.Contents[0]}
-					{#each items.Contents as item}
+					{#each items.Contents as item, itemsIndex}
 						<Item>
 							{item.Key}
-							<IconButton class="material-icons" on:click={() => console.log('clicked')}>edit</IconButton>
-							<IconButton class="material-icons" on:click={() => console.log('clicked')}>delete</IconButton>
+							<IconButton class="material-icons" on:click={() => console.log(item.Key)}
+								>edit</IconButton
+							>
+							<IconButton
+								class="material-icons"
+								on:click={() => {
+									deleteBucketItem(item.Key);
+									items.Contents = items.Contents.filter((value) => value != item);
+								}}>delete</IconButton
+							>
 						</Item>
 					{/each}
 				{:else}
@@ -100,6 +111,7 @@
 
 				<br />
 			</List>
+			<!-- <Button variant="raised" on:click={()=>putObject(currentBucketName, endpoint, accessKey, secretKey, '')}>add item</Button> -->
 		{/await}
 	{/if}
 </center>

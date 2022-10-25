@@ -26,20 +26,20 @@
 		"@smui/textfield": "^7.0.0-beta.0",
 		"@sveltejs/adapter-auto": "next",
 		"@sveltejs/kit": "next",
-		"prettier": "^2.6.2",
-		"prettier-plugin-svelte": "^2.7.0",
+		"prettier": "^2.7.1",
+		"prettier-plugin-svelte": "^2.8.0",
 		"smui-theme": "^7.0.0-beta.0",
-		"svelte": "^3.49.0",
-		"svelte-check": "^2.7.1",
-		"svelte-preprocess": "^4.10.6",
+		"svelte": "^3.52.0",
+		"svelte-check": "^2.9.2",
+		"svelte-preprocess": "^4.10.7",
 		"tslib": "^2.4.0",
-		"typescript": "^4.8.3",
-		"vite": "^3.1.0"
+		"typescript": "^4.8.4",
+		"vite": "^3.1.8"
 	},
 	"type": "module",
 	"dependencies": {
-		"@rollup/plugin-typescript": "^8.5.0",
-		"aws-sdk": "^2.1216.0",
+		"@rollup/plugin-typescript": "^9.0.2",
+		"aws-sdk": "^2.1240.0",
 		"svelte-material-ui": "^7.0.0-beta.0"
 	}
 }
